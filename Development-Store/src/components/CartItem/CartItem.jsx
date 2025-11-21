@@ -6,9 +6,9 @@ const CartItem = ({ bookTitle, bookCount }) => {
 		<>
 			<section className="w-full px-3 py-2 mt-5 grid grid-cols-5 gap-3 bg-white  rounded-2xl">
 				<section className="p-1 col-span-2 ">
-					<h4 className="text-sm text-left text-blue-900 font-bold">
+					<h3 className="text-sm text-left text-blue-900 font-bold">
 						{bookTitle}
-					</h4>
+					</h3>
 				</section>
 				<section className="col-span-1 flex justify-center items-center">
 					<section className="flex justify-around items-start gap-2">
@@ -20,6 +20,9 @@ const CartItem = ({ bookTitle, bookCount }) => {
 							<FaPlus />
 						</button>
 					</section>
+				</section>
+				<section className="col-span-1 flex justify-center items-center">
+					<h4>&#x20b9; {bookCount * 50}</h4>
 				</section>
 			</section>
 		</>
