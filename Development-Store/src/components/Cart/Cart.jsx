@@ -1,8 +1,13 @@
 import React from "react";
 import { FaXmark } from "react-icons/fa6";
 import EmptyCart from "../EmptyCart/EmptyCart";
+import { useSelector } from "react-redux";
+import getCartQuantity from "../../utils/getCartQuantity";
+import FilledCart from "../FilledCart/FilledCart";
 
 const Cart = ({ setShowCart }) => {
+	const cart = useSelector((state) => state.cart.value);
+	const cartQuantity = getCartQuantity(cart);
 	return (
 		<>
 			<section className="fixed top-0 left-0 z-80 flex justify-end w-screen h-screen bg-slate-400/50 shadow-2xl">
@@ -12,7 +17,7 @@ const Cart = ({ setShowCart }) => {
 						onClick={() => setShowCart((curr) => !curr)}>
 						<FaXmark />
 					</button>
-					<EmptyCart />
+					{cartQuantity === 0 ? <EmptyCart /> : <FilledCart />}
 				</section>
 			</section>
 		</>

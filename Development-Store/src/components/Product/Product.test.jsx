@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import Product from "./Product";
 import { expect } from "vitest";
+import { Provider } from "react-redux";
+import { store } from "/src/app/store.js";
 
 describe("test cases for product component", () => {
 	const book1 = {
@@ -20,28 +22,49 @@ describe("test cases for product component", () => {
 		imgSrc: "../public/Kata_DevelopmentBooks_Refactoring.jpeg",
 	};
 	it("should render book image,", () => {
-		render(<Product book={book1} />);
+		console.log(store);
+		render(
+			<Provider store={store}>
+				<Product book={book1} />
+			</Provider>
+		);
 		const bookImg = screen.getByRole("img");
 		expect(bookImg).toHaveAttribute("src", book1.imgSrc);
 	});
 	it("should render book title,", () => {
-		render(<Product book={book1} />);
+		render(
+			<Provider store={store}>
+				<Product book={book1} />
+			</Provider>
+		);
 		const bookTitle = screen.getByRole("heading", { level: 3 });
 		expect(bookTitle).toHaveTextContent(book1.title);
 	});
 	it("should render truncated book title when book title exceeds limit,", () => {
 		const truncatedTitle = book2.title.slice(0, 25) + "...";
-		render(<Product book={book2} />);
+		render(
+			<Provider store={store}>
+				<Product book={book2} />
+			</Provider>
+		);
 		const bookTitle = screen.getByRole("heading", { level: 3 });
 		expect(bookTitle).toHaveTextContent(truncatedTitle);
 	});
 	it("should render book price,", () => {
-		render(<Product book={book1} />);
+		render(
+			<Provider store={store}>
+				<Product book={book1} />
+			</Provider>
+		);
 		const bookPrice = screen.getByRole("heading", { level: 4 });
 		expect(bookPrice).toHaveTextContent(book1.price);
 	});
 	it("should render add to cart button,", () => {
-		render(<Product book={book1} />);
+		render(
+			<Provider store={store}>
+				<Product book={book1} />
+			</Provider>
+		);
 		const addToCartBtn = screen.getByRole("button");
 		expect(addToCartBtn).toHaveTextContent(/add to cart/i);
 	});
