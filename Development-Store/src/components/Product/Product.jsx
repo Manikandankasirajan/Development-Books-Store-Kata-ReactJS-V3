@@ -1,7 +1,9 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addBookToCart } from "../../features/cart/cartSlice";
 
 const Product = ({ book }) => {
-	console.log(book);
+	const dispatch = useDispatch();
 	const { imgSrc: bookImg, title: bookTitle, price: bookPrice } = book;
 	return (
 		<>
@@ -13,7 +15,9 @@ const Product = ({ book }) => {
 				<h4 className="text-md font-bold mb-1 text-gray-700">
 					&#x20b9; {bookPrice}
 				</h4>
-				<button className="w-full py-2 flex justify-center bg-blue-900 text-white  cursor-pointer font-bold hover:bg-blue-700 rounded hover:scale-105 transition delay-150 duration-300 ease-in-out">
+				<button
+					className="w-full py-2 flex justify-center bg-blue-900 text-white  cursor-pointer font-bold hover:bg-blue-700 rounded hover:scale-105 transition delay-150 duration-300 ease-in-out"
+					onClick={() => dispatch(addBookToCart(bookTitle))}>
 					Add to Cart
 				</button>
 			</section>
