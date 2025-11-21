@@ -5,11 +5,12 @@ import BOOK_LIST from "./data/productsDetails";
 import Cart from "./components/Cart/Cart";
 
 const App = () => {
+	const [showCart, setShowCart] = useState(false);
 	return (
 		<>
-			<NavBar />
+			<NavBar setShowCart={setShowCart} />
 			<ProductList productList={BOOK_LIST} />
-			<Cart />
+			{showCart && <Cart />}
 		</>
 	);
 };
