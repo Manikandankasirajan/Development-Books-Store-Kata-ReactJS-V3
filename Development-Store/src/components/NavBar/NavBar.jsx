@@ -1,7 +1,11 @@
 import React from "react";
 import { FaBagShopping } from "react-icons/fa6";
+import { useSelector } from "react-redux";
+import getCartQuantity from "../../utils/getCartQuantity";
 
 const NavBar = ({ setShowCart }) => {
+	const cart = useSelector((state) => state.cart.value);
+	const cartQuantity = getCartQuantity(cart);
 	return (
 		<>
 			<header>
@@ -15,11 +19,13 @@ const NavBar = ({ setShowCart }) => {
 							onClick={() => setShowCart((curr) => !curr)}>
 							<FaBagShopping />
 						</button>
-						<div
-							data-testid="cartQuantityBanner"
-							className="absolute top-0 right-3 w-4 h-4 bg-red-600 text-white text-xs font-bold text-center rounded-full">
-							2
-						</div>
+						{cartQuantity > 0 && (
+							<div
+								data-testid="cartQuantityBanner"
+								className="absolute top-0 right-3 w-4 h-4 bg-red-600 text-white text-xs font-bold text-center rounded-full">
+								{cartQuantity}
+							</div>
+						)}
 					</section>
 				</nav>
 			</header>
