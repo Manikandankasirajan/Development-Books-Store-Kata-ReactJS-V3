@@ -1,5 +1,6 @@
 import React from "react";
 import { FaXmark } from "react-icons/fa6";
+import EmptyCart from "../EmptyCart/EmptyCart";
 
 const Cart = () => {
 	return (
@@ -9,6 +10,7 @@ const Cart = () => {
 					<button className="absolute top-8 right-8 text-2xl cursor-pointer hover:scale-125 transition delay-150 duration-300 ease-in-out">
 						<FaXmark />
 					</button>
+					<EmptyCart />
 				</section>
 			</section>
 		</>
