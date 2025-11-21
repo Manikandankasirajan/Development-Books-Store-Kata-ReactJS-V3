@@ -10,7 +10,7 @@ const App = () => {
 		<>
 			<NavBar setShowCart={setShowCart} />
 			<ProductList productList={BOOK_LIST} />
-			{showCart && <Cart />}
+			{showCart && <Cart setShowCart={setShowCart} />}
 		</>
 	);
 };
