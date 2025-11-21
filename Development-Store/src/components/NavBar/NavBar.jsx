@@ -9,10 +9,15 @@ const NavBar = () => {
 					<h1 className="text-3xl font-bold text-white">
 						Development Books Store
 					</h1>
-					<section className="flex justify-around items-center ml-5">
-						<button className="mr-3 text-3xl text-white font-bold cursor-pointer hover:scale-110 transition delay-150 duration-300 ease-in-out">
+					<section className="relative flex justify-around items-center ml-5">
+						<button className="mr-4 text-3xl text-white font-bold cursor-pointer hover:scale-110 transition delay-150 duration-300 ease-in-out">
 							<FaBagShopping />
 						</button>
+						<div
+							data-testid="cartQuantityBanner"
+							className="absolute top-0 right-3 w-4 h-4 bg-red-600 text-white text-xs font-bold text-center rounded-full">
+							2
+						</div>
 					</section>
 				</nav>
 			</header>

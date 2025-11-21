@@ -14,4 +14,9 @@ describe("test cases for NavBar component", () => {
 		const shoppingCartIcon = btn.querySelector("svg");
 		expect(shoppingCartIcon).toBeInTheDocument();
 	});
+	it("should render cart quantity banner", () => {
+		render(<NavBar />);
+		const cartQuantityBanner = screen.getByTestId("cartQuantityBanner");
+		expect(cartQuantityBanner).toBeInTheDocument();
+	});
 });
