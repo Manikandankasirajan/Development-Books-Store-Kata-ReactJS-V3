@@ -5,10 +5,13 @@ import {
 	reduceBookQuantityFromCart,
 	removeBookFromCart,
 } from "../../features/cart/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CartItem = ({ bookTitle, bookCount }) => {
+	const cart = useSelector((state) => state.cart.value);
 	const dispatch = useDispatch();
+	const isButtonDisabled = cart[bookTitle] < 2;
+
 	return (
 		<>
 			<section className="w-full px-3 py-2 mt-5 grid grid-cols-5 gap-3 bg-white  rounded-2xl">
@@ -21,7 +24,8 @@ const CartItem = ({ bookTitle, bookCount }) => {
 					<section className="flex justify-around items-start gap-2">
 						<button
 							className="px-3 py-1 text-black font-bold rounded-xl hover:opacity-50 cursor-pointer disabled:text-black/50 disabled:cursor-not-allowed"
-							onClick={() => dispatch(reduceBookQuantityFromCart(bookTitle))}>
+							onClick={() => dispatch(reduceBookQuantityFromCart(bookTitle))}
+							disabled={isButtonDisabled}>
 							<FaMinus />
 						</button>
 						<p className="font-bold">{bookCount}</p>
@@ -38,7 +42,7 @@ const CartItem = ({ bookTitle, bookCount }) => {
 				<section className="col-span-1 flex justify-center items-center">
 					<button
 						className="hover:opacity-50 cursor-pointer "
-						onClick={() => dispatch(reduceBookQuantityFromCart(bookTitle))}>
+						onClick={() => dispatch(removeBookFromCart(bookTitle))}>
 						<FaRegTrashCan />
 					</button>
 				</section>
