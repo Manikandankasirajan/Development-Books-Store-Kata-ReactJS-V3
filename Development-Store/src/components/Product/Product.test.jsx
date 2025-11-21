@@ -26,4 +26,9 @@ describe("test cases for product component", () => {
 		const bookPrice = screen.getByRole("heading", { level: 4 });
 		expect(bookPrice).toHaveTextContent(book.price);
 	});
+	it("should render add to cart button,", () => {
+		render(<Product book={book} />);
+		const addToCartBtn = screen.getByRole("button");
+		expect(addToCartBtn).toHaveTextContent(/add to cart/i);
+	});
 });
