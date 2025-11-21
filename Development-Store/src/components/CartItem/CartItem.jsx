@@ -1,7 +1,10 @@
 import React from "react";
 import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
+import { addBookToCart } from "../../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 const CartItem = ({ bookTitle, bookCount }) => {
+	const dispatch = useDispatch();
 	return (
 		<>
 			<section className="w-full px-3 py-2 mt-5 grid grid-cols-5 gap-3 bg-white  rounded-2xl">
@@ -16,7 +19,9 @@ const CartItem = ({ bookTitle, bookCount }) => {
 							<FaMinus />
 						</button>
 						<p className="font-bold">{bookCount}</p>
-						<button className="px-3 py-1 text-black font-bold rounded-xl hover:opacity-50 cursor-pointer ">
+						<button
+							className="px-3 py-1 text-black font-bold rounded-xl hover:opacity-50 cursor-pointer"
+							onClick={() => dispatch(addBookToCart(bookTitle))}>
 							<FaPlus />
 						</button>
 					</section>
