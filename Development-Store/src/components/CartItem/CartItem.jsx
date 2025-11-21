@@ -1,5 +1,5 @@
 import React from "react";
-import { FaMinus, FaPlus } from "react-icons/fa6";
+import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
 
 const CartItem = ({ bookTitle, bookCount }) => {
 	return (
@@ -23,6 +23,11 @@ const CartItem = ({ bookTitle, bookCount }) => {
 				</section>
 				<section className="col-span-1 flex justify-center items-center">
 					<h4>&#x20b9; {bookCount * 50}</h4>
+				</section>
+				<section className="col-span-1 flex justify-center items-center">
+					<button className="hover:opacity-50 cursor-pointer ">
+						<FaRegTrashCan />
+					</button>
 				</section>
 			</section>
 		</>

@@ -9,7 +9,7 @@ describe("test cases for cart item component", () => {
 		const btns = screen.getAllByRole("button");
 		const bookPrice = screen.getByRole("heading", { level: 4 });
 		expect(bookTitle).toBeInTheDocument();
-		expect(btns.length).toBe(2);
+		expect(btns.length).toBe(3);
 		expect(bookPrice).toBeInTheDocument();
 	});
 });
