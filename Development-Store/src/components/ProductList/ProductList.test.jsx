@@ -4,8 +4,13 @@ import { expect } from "vitest";
 
 describe("test cases for productlist component", () => {
 	it("should render heading", () => {
-		render(<ProductList />);
+		render(<ProductList productList={[]} />);
 		const heading = screen.getByRole("heading", { level: 2 });
 		expect(heading).toHaveTextContent(/books available/i);
+	});
+	it("should render Opps...No Product to Show when product list is empty", () => {
+		render(<ProductList productList={[]} />);
+		const text = screen.getByText(/Opps...No Product to Show/i);
+		expect(text).toBeInTheDocument();
 	});
 });
