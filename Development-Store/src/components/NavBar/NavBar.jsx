@@ -15,6 +15,7 @@ const NavBar = ({ setShowCart }) => {
 					</h1>
 					<section className="relative flex justify-around items-center ml-5">
 						<button
+							aria-label="open cart button"
 							className="mr-4 text-3xl text-white font-bold cursor-pointer hover:scale-110 transition delay-150 duration-300 ease-in-out"
 							onClick={() => setShowCart((curr) => !curr)}>
 							<FaBagShopping />

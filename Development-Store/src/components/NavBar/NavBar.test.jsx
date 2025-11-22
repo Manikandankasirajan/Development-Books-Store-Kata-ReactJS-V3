@@ -1,37 +1,50 @@
-import { render, screen } from "@testing-library/react";
-import { expect } from "vitest";
+import { findByRole, render, screen } from "@testing-library/react";
+import { expect, vi } from "vitest";
 import NavBar from "./NavBar";
-import { Provider } from "react-redux";
-import { store } from "/src/app/store.js";
+
+vi.mock("react-redux", () => ({
+	useSelector: vi.fn(),
+}));
+
+vi.mock("../../utils/getCartQuantity", () => ({
+	default: vi.fn(),
+}));
+
+vi.mock("react-icons/fa6", () => ({
+	FaBagShopping: () => <div data-testid="fa-bag-icon" />,
+}));
+
+import { useSelector } from "react-redux";
+import getCartQuantity from "../../utils/getCartQuantity";
 
 describe("test cases for NavBar component", () => {
-	const setShoCart = false;
-	it("should render heading/logo", () => {
-		render(
-			<Provider store={store}>
-				<NavBar />
-			</Provider>
-		);
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
+	it("should render heading/logo, add to cart button and shopping cart icon in the button", () => {
+		useSelector.mockReturnValue({});
+		getCartQuantity.mockReturnValue(0);
+		render(<NavBar setShowCart={() => {}} />);
 		const logo = screen.getByRole("heading", { level: 1 });
 		expect(logo).toHaveTextContent(/development books store/i);
+		const addToCartBtn = screen.getByRole("button");
+		expect(addToCartBtn).toBeInTheDocument();
+		const shoppingCartBtnIcon = screen.getByTestId("fa-bag-icon");
+		expect(shoppingCartBtnIcon).toBeInTheDocument();
 	});
-	it("should render toggle shopping cart button with fa shopping cart icon", () => {
-		render(
-			<Provider store={store}>
-				<NavBar />
-			</Provider>
-		);
-		const btn = screen.getByRole("button");
-		const shoppingCartIcon = btn.querySelector("svg");
-		expect(shoppingCartIcon).toBeInTheDocument();
-	});
-	it("should render cart quantity banner", () => {
-		render(
-			<Provider store={store}>
-				<NavBar />
-			</Provider>
-		);
+	it("should not render cart quantity banner when cart is empty", () => {
+		useSelector.mockReturnValue({});
+		getCartQuantity.mockReturnValue(0);
+		render(<NavBar setShowCart={() => {}} />);
 		const cartQuantityBanner = screen.queryByTestId("cartQuantityBanner");
 		expect(cartQuantityBanner).not.toBeInTheDocument();
+	});
+	it("should render cart quantity banner when cart quantity is > 0", () => {
+		useSelector.mockReturnValue({});
+		getCartQuantity.mockReturnValue(5);
+		render(<NavBar setShowCart={() => {}} />);
+		const cartQuantityBanner = screen.queryByTestId("cartQuantityBanner");
+		expect(cartQuantityBanner).toBeInTheDocument();
+		expect(cartQuantityBanner).toHaveTextContent("5");
 	});
 });
