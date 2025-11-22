@@ -15,6 +15,13 @@ function calculatePrice(bookSets) {
 	return total;
 }
 
+function calcualtePriceOfBookSet(bookSet) {
+	const bookCount = bookSet.length;
+	const actualPrice = calculateActualPriceOfSet(bookCount);
+	const discountPrice = calculateDiscountPriceOfSet(bookCount);
+	return actualPrice - discountPrice;
+}
+
 function calculateActualPriceOfSet(bookCount) {
 	return bookCount * BOOK_PRICE;
 }

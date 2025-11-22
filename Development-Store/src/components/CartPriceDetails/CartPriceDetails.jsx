@@ -1,23 +1,32 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import getCartQuantity from "../../utils/getCartQuantity";
+import getPriceDetails from "../../utils/getPriceDetails";
+import { BOOK_PRICE } from "../../constants";
 
 const CartPriceDetails = () => {
+	const cart = useSelector((state) => state.cart.value);
+	const cartQuantity = getCartQuantity(cart);
+	const priceAfterDiscount = getPriceDetails(cart);
+	const totalPrice = cartQuantity * BOOK_PRICE;
+	const discountPrice = totalPrice - priceAfterDiscount;
 	return (
 		<>
 			<section className="py-5 flex flex-col justify-between gap-5">
 				<section className="py-2 flex justify-between items-center border-b border-dashed ">
 					<h4 className="text-gray-600 font-bold">Total Price</h4>
-					<p className="mr-5 text-gray-600 font-bold">&#x20b9; 50</p>
+					<p className="mr-5 text-gray-600 font-bold">&#x20b9; {totalPrice}</p>
 				</section>
 				<section className="py-2 flex justify-between items-center border-b border-dashed">
 					<h4 className="text-gray-600 font-bold">Discount Price</h4>
 					<p className="mr-5 text-gray-600 font-bold">
-						&#x20b9; 50
+						&#x20b9; {discountPrice}
 					</p>
 				</section>
 				<section className="py-2 flex justify-between items-center border-b border-dashed">
 					<h4 className="text-gray-600 font-bold">Final Price</h4>
 					<p className="mr-5 text-gray-600 font-bold">
-						&#x20b9; 50
+						&#x20b9; {priceAfterDiscount}
 					</p>
 				</section>
 			</section>
