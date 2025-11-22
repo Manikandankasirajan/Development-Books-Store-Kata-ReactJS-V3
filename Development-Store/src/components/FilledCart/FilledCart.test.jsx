@@ -12,6 +12,8 @@ describe("test cased for filled cart component", () => {
 			</Provider>
 		);
 		const heading = screen.getByRole("heading", { level: 2 });
+		const btns = screen.getAllByRole("button");
 		expect(heading).toHaveTextContent(/cart summary/i);
+		expect(btns).toHaveLength(2);
 	});
 });
