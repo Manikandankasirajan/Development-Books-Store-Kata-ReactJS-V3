@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import CartItem from "../CartItem/CartItem";
+import CartPriceDetails from "../CartPriceDetails/CartPriceDetails";
 
 const FilledCart = () => {
 	const cart = useSelector((state) => state.cart.value);
@@ -22,6 +23,7 @@ const FilledCart = () => {
 						);
 					})}
 				</section>
+				<CartPriceDetails />
 			</section>
 		</>
 	);

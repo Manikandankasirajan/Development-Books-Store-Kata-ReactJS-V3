@@ -1,3 +1,4 @@
+import { BOOK_PRICE, DISCOUNT_RULE } from "../constants.js";
 import createSetOfUniqueBooks from "./createSetOfUniqueBooks";
 
 export default function getPriceDetails(cart) {
@@ -15,9 +16,9 @@ function calculatePrice(bookSets) {
 }
 
 function calculateActualPriceOfSet(bookCount) {
-	return bookCount * 50;
+	return bookCount * BOOK_PRICE;
 }
 
 function calculateDiscountPriceOfSet(bookCount) {
-	return bookCount * 50 * (DISCOUNT_RULE[bookCount] / 100);
+	return bookCount * BOOK_PRICE * (DISCOUNT_RULE[bookCount] / 100);
 }
