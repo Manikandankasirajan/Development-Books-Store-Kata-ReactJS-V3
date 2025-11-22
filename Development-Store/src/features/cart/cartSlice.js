@@ -17,10 +17,17 @@ export const cartSlice = createSlice({
 		removeBookFromCart: (state, action) => {
 			delete state.value[action.payload];
 		},
+		removeAllFromCart: (state) => {
+			state.value = {};
+		},
 	},
 });
 
-export const { addBookToCart, reduceBookQuantityFromCart, removeBookFromCart } =
-	cartSlice.actions;
+export const {
+	addBookToCart,
+	reduceBookQuantityFromCart,
+	removeBookFromCart,
+	removeAllFromCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
