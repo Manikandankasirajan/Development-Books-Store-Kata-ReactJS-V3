@@ -1,15 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
-import {
-	addBookToCart,
-	reduceBookQuantityFromCart,
-	removeBookFromCart,
-} from "../../features/cart/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { CartContext } from "../../App";
 
 const CartItem = ({ bookTitle, bookCount }) => {
-	const cart = useSelector((state) => state.cart.value);
-	const dispatch = useDispatch();
+	const { cart, cartAction } = useContext(CartContext);
 	const isButtonDisabled = cart[bookTitle] < 2;
 
 	return (
@@ -24,14 +18,24 @@ const CartItem = ({ bookTitle, bookCount }) => {
 					<section className="flex justify-around items-start gap-2">
 						<button
 							className="px-3 py-1 text-black font-bold rounded-xl hover:opacity-50 cursor-pointer disabled:text-black/50 disabled:cursor-not-allowed"
-							onClick={() => dispatch(reduceBookQuantityFromCart(bookTitle))}
+							onClick={() =>
+								cartAction({
+									type: "reduceBookQuantityFromCart",
+									payload: bookTitle,
+								})
+							}
 							disabled={isButtonDisabled}>
 							<FaMinus />
 						</button>
 						<p className="font-bold">{bookCount}</p>
 						<button
 							className="px-3 py-1 text-black font-bold rounded-xl hover:opacity-50 cursor-pointer"
-							onClick={() => dispatch(addBookToCart(bookTitle))}>
+							onClick={() =>
+								cartAction({
+									type: "AddToCart",
+									payload: bookTitle,
+								})
+							}>
 							<FaPlus />
 						</button>
 					</section>
@@ -42,7 +46,12 @@ const CartItem = ({ bookTitle, bookCount }) => {
 				<section className="col-span-1 flex justify-center items-center">
 					<button
 						className="hover:opacity-50 cursor-pointer "
-						onClick={() => dispatch(removeBookFromCart(bookTitle))}>
+						onClick={() =>
+							cartAction({
+								type: "RemoveFromCart",
+								payload: bookTitle,
+							})
+						}>
 						<FaRegTrashCan />
 					</button>
 				</section>

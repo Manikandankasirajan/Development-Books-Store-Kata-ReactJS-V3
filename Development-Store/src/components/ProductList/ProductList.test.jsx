@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import ProductList from "./ProductList";
 import { expect } from "vitest";
+import BOOK_LIST from "/src/data/productsDetails.js";
 
 describe("test cases for productlist component", () => {
 	it("should render heading", () => {

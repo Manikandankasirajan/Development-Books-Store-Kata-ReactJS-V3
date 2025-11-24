@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaXmark } from "react-icons/fa6";
 import EmptyCart from "../EmptyCart/EmptyCart";
-import { useSelector } from "react-redux";
 import getCartQuantity from "../../utils/getCartQuantity";
 import FilledCart from "../FilledCart/FilledCart";
+import { CartContext } from "../../App";
 
 const Cart = ({ setShowCart }) => {
-	const cart = useSelector((state) => state.cart.value);
+	const { cart, cartAction } = useContext(CartContext);
 	const cartQuantity = getCartQuantity(cart);
 	return (
 		<>

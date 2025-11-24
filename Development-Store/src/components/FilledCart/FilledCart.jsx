@@ -1,12 +1,11 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useContext } from "react";
 import CartItem from "../CartItem/CartItem";
 import CartPriceDetails from "../CartPriceDetails/CartPriceDetails";
-import { removeAllFromCart } from "../../features/cart/cartSlice";
+import { CartContext } from "../../App";
 
 const FilledCart = () => {
-	const cart = useSelector((state) => state.cart.value);
-	const dispatch = useDispatch();
+	const { cart, cartAction } = useContext(CartContext);
+
 	return (
 		<>
 			<section className="p-6">
@@ -29,7 +28,7 @@ const FilledCart = () => {
 				<section className="flex justify-around items-center mt-5">
 					<button
 						className="px-10 py-2 bg-slate-400 font-bold rounded-xl hover:bg-slate-600 hover:cursor-pointer hover:scale-105 transition delay-150 duration-300 ease-in-out"
-						onClick={() => dispatch(removeAllFromCart())}>
+						onClick={() => cartAction({ type: "removeAllFromCart" })}>
 						Clear Cart
 					</button>
 					<button className="px-10 py-2 bg-blue-900 text-white  font-bold  rounded-xl hover:bg-blue-700 hover:cursor-pointer hover:scale-105 transition delay-150 duration-300 ease-in-out">

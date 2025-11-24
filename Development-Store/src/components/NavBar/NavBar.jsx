@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaBagShopping } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { CartContext } from "../../App";
 import getCartQuantity from "../../utils/getCartQuantity";
 
 const NavBar = ({ setShowCart }) => {
-	const cart = useSelector((state) => state.cart.value);
+	const { cart, cartAction } = useContext(CartContext);
 	const cartQuantity = getCartQuantity(cart);
+	console.log(cart);
 	return (
 		<>
 			<header>

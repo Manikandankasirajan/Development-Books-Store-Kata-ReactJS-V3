@@ -1,11 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useContext } from "react";
 import getCartQuantity from "../../utils/getCartQuantity";
 import getPriceDetails from "../../utils/getPriceDetails";
 import { BOOK_PRICE } from "../../constants";
+import { CartContext } from "../../App";
 
 const CartPriceDetails = () => {
-	const cart = useSelector((state) => state.cart.value);
+	const { cart, cartAction } = useContext(CartContext);
 	const cartQuantity = getCartQuantity(cart);
 	const priceAfterDiscount = getPriceDetails(cart);
 	const totalPrice = cartQuantity * BOOK_PRICE;
