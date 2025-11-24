@@ -1,15 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import Cart from "./Cart";
 import { expect } from "vitest";
-import { Provider } from "react-redux";
-import { store } from "/src/app/store.js";
+import { CartContext } from "../../App";
 
 describe("test cases for Cart component", () => {
 	it("should render close cart button", () => {
 		render(
-			<Provider store={store}>
+			<CartContext value={{ cart: {}, cartAction: vi.fn() }}>
 				<Cart />
-			</Provider>
+			</CartContext>
 		);
 		const closeCartBtn = screen.getByRole("button");
 		const svg = closeCartBtn.querySelector("svg");

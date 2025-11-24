@@ -1,10 +1,21 @@
-import { findByRole, render, screen } from "@testing-library/react";
-import { expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, vi } from "vitest";
 import NavBar from "./NavBar";
+import { CartContext } from "../../App";
 
-vi.mock("react-redux", () => ({
-	useSelector: vi.fn(),
-}));
+function renderComponent() {
+	render(
+		<CartContext value={{ cart: {}, cartAction: vi.fn() }}>
+			<NavBar setShowCart={vi.fn()} />
+		</CartContext>
+	);
+	return {
+		heading: screen.getByRole("heading", { level: 1 }),
+		shoppingCartBtn: screen.getByRole("button"),
+		shoppingCartBtnIcon: screen.getByTestId("fa-bag-icon"),
+		cartQuantityBanner: screen.queryByTestId("cartQuantityBanner"),
+	};
+}
 
 vi.mock("../../utils/getCartQuantity", () => ({
 	default: vi.fn(),
@@ -14,37 +25,50 @@ vi.mock("react-icons/fa6", () => ({
 	FaBagShopping: () => <div data-testid="fa-bag-icon" />,
 }));
 
-import { useSelector } from "react-redux";
 import getCartQuantity from "../../utils/getCartQuantity";
+import userEvent from "@testing-library/user-event";
 
-describe("test cases for NavBar component", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-	it("should render heading/logo, add to cart button and shopping cart icon in the button", () => {
-		useSelector.mockReturnValue({});
+describe("test cases for navbar component", () => {
+	it("should render heading", () => {
 		getCartQuantity.mockReturnValue(0);
-		render(<NavBar setShowCart={() => {}} />);
-		const logo = screen.getByRole("heading", { level: 1 });
-		expect(logo).toHaveTextContent(/development books store/i);
-		const addToCartBtn = screen.getByRole("button");
-		expect(addToCartBtn).toBeInTheDocument();
-		const shoppingCartBtnIcon = screen.getByTestId("fa-bag-icon");
+		const { heading: heading } = renderComponent();
+		expect(heading).toHaveTextContent(/development books/i);
+	});
+	it("should render add to cart button", () => {
+		getCartQuantity.mockReturnValue(0);
+		const { shoppingCartBtn: shoppingCartBtn } = renderComponent();
+		expect(shoppingCartBtn).toBeInTheDocument();
+	});
+	it("should render add to cart button with shopping cart icon", () => {
+		getCartQuantity.mockReturnValue(0);
+		const { shoppingCartBtnIcon: shoppingCartBtnIcon } = renderComponent();
 		expect(shoppingCartBtnIcon).toBeInTheDocument();
 	});
+
 	it("should not render cart quantity banner when cart is empty", () => {
-		useSelector.mockReturnValue({});
 		getCartQuantity.mockReturnValue(0);
-		render(<NavBar setShowCart={() => {}} />);
-		const cartQuantityBanner = screen.queryByTestId("cartQuantityBanner");
+		const { cartQuantityBanner: cartQuantityBanner } = renderComponent();
 		expect(cartQuantityBanner).not.toBeInTheDocument();
 	});
 	it("should render cart quantity banner when cart quantity is > 0", () => {
-		useSelector.mockReturnValue({});
-		getCartQuantity.mockReturnValue(5);
-		render(<NavBar setShowCart={() => {}} />);
-		const cartQuantityBanner = screen.queryByTestId("cartQuantityBanner");
+		getCartQuantity.mockReturnValue(3);
+		const { cartQuantityBanner: cartQuantityBanner } = renderComponent();
 		expect(cartQuantityBanner).toBeInTheDocument();
-		expect(cartQuantityBanner).toHaveTextContent("5");
+		expect(cartQuantityBanner).toHaveTextContent("3");
+	});
+});
+
+describe("to test if show cart button cals the function when clicked", () => {
+	it("should call setShowCart fn when clicked", async () => {
+		const mockFn = vi.fn();
+		render(
+			<CartContext value={{ cart: {}, cartAction: vi.fn() }}>
+				<NavBar setShowCart={mockFn} />
+			</CartContext>
+		);
+		const user = userEvent.setup();
+		const shoppingCartBtn = screen.getByRole("button");
+		await user.click(shoppingCartBtn);
+		expect(mockFn).toHaveBeenCalledTimes(1);
 	});
 });

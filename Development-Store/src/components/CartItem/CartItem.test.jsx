@@ -1,15 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import CartItem from "./CartItem";
 import { expect } from "vitest";
-import { Provider } from "react-redux";
-import { store } from "/src/app/store.js";
+import { CartContext } from "../../App";
 
 describe("test cases for cart item component", () => {
 	it("should render book title, increase and decrease book count, book count", () => {
 		render(
-			<Provider store={store}>
+			<CartContext value={{ cart: {}, cartAction: vi.fn() }}>
 				<CartItem />
-			</Provider>
+			</CartContext>
 		);
 		const bookTitle = screen.getByRole("heading", { level: 3 });
 		const btns = screen.getAllByRole("button");
